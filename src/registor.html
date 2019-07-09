@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>用户注册</title>
+    <style type="text/css">
+        body {
+            font-size: 12px;
+            font-family: "微软雅黑";
+            position: relative;
+        }
+        
+        fieldset {
+            width: 630px;
+            margin: auto;
+            position: fixed;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 280px;
+            font-size: 18px;
+            border: 1px solid #000000;
+            box-shadow: 5px 5px 2px #000000;
+        }
+        
+        input {
+            height: 28px;
+            width: 240px
+        }
+        
+        input[type=submit] {
+            width: 90px;
+            font-size: 20px;
+            text-align: center;
+            height: 35px;
+            margin-left: 60px;
+            cursor: pointer;
+        }
+        
+        .fwidth {
+            margin-left: 20px;
+            width: 100px;
+            float: left;
+        }
+        
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <fieldset>
+
+        <form action="http://10.31.158.55/aiqiyistore/php/registry.php" method="post" id="form1">
+            <p>
+                <label class="fwidth" for="username">用户名字：</label>
+                <input type="text" name="username" id="username" placeholder="请输入您的用户名" />
+                <label id="username-error" class="error" for="username">请输入您的用户名</label>
+            </p>
+            <p>
+                <label class="fwidth" for="password">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                <input type="password" name="password" id="password" placeholder="请输入您的密码" />
+                <label id="password-error" class="error" for="password">密码长度不得少于6位</label>
+            </p>
+            <p>
+                <label class="fwidth" for="repass">重复密码：</label>
+                <input type="password" name="repass" id="repass" placeholder="请再次输入您的密码" />
+                <label id="repass-error" class="error" for="repass">密码长度不得少于6位</label>
+            </p>
+            <p>
+                <label class="fwidth" for="email">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
+                <input type="text" name="email" id="email" placeholder="请输入您的邮箱" />
+                <label id="email-error" class="error" for="email">请输入您的邮箱</label>
+            </p>
+            <p>
+                <input type="submit" value="注&nbsp;&nbsp;册" name="submit" />
+            </p>
+        </form>
+    </fieldset>
+    <script src="script/thirdplugins/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="script/thirdplugins/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#form1').validate({
+                rules: {
+                    username: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 10,
+                        remote: {
+                            url: "http://10.31.158.55/aiqiyistore/php/registry.php",
+                            type: "post"
+                        }
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    repass: {
+                        required: true,
+                        equalTo: '#password'
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    username: {
+                        required: '用户名不能为空',
+                        minlength: '用户名长度不能小于2',
+                        maxlength: '用户名长度不能大于10',
+                        remote: '用户名已存在'
+                    },
+                    password: {
+                        required: '密码不能为空'
+                    },
+                    repass: {
+                        required: '密码重复不能为空'
+                    },
+                    email: {
+                        required: '电子邮箱不能为空',
+                        email: '您输入的格式有误'
+                    }
+                }
+
+            });
+        });
+
+        $.validator.setDefaults({
+            success: function(label) {
+                label.text('输入正确').css('color', 'green').addClass('valid');
+            }
+        });
+    </script>
+</body>
+
+</html>
